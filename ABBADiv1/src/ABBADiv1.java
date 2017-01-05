@@ -2,40 +2,28 @@
  * 
  * @author karran
  * 
- * Explanation to the problem will be here
+ *         Explanation to the problem will be here
  * 
  */
 
 public class ABBADiv1 {
 
-	/**
-	 * 
-	 * @param initial
-	 * @param target
-	 * @return
-	 */
-    public String canObtain(String initial, String target) {
-    	return _canObtain(initial, target) ? "Possible" : "Impossible";
-    }
-
-	/**
-	 * recursividade FTW!
-	 * @param initial
-	 * @param target
-	 * @return
-	 */
-	private boolean _canObtain(String initial, String target) {
-		
-		int targetLenght = target.length();
-		if (initial.length()==targetLenght)
-			return initial.equals(target);
-		String testA = initial+"A";
-		if (_canObtain(testA, target))
-			return true;
-		String testB = new StringBuffer(initial + "B").reverse().toString();
-		return _canObtain(testB, target);
+	public String canObtain(String initial, String target) {
+		return _canObtain(initial, target) ? "Possible" : "Impossible";
 	}
 
+	private boolean _canObtain(String initial, String target) {
+		if (initial.length() == target.length())
+			return initial.equals(target);
+		String testA = initial + "A";
+		if (target.indexOf(testA)!=-1 || target.indexOf(new StringBuffer(testA).reverse().toString())!=-1)
+			if (_canObtain(testA, target))
+				return true;
+		String testB = new StringBuffer(initial + "B").reverse().toString();
+		if (target.indexOf(testB)!=-1 || target.indexOf(new StringBuffer(testB).reverse().toString())!=-1)
+			return _canObtain(testB, target);
+		return false;
+	}
 
 	public static void main(String[] args) {
 
